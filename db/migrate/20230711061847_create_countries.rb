@@ -9,5 +9,7 @@ class CreateCountries < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
+    add_index :countries, :name, unique: true
+    add_index :countries, :phone_code, unique: true
   end
 end
