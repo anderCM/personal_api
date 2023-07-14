@@ -43,9 +43,9 @@ RSpec.describe Country, type: :model do
     expect(country.errors[:flag_icon]).to include("can't be blank")
   end
 
-  it 'is invalid without a flag_icon type string' do
+  it 'is invalid without a flag_icon type URL' do
     country = Country.new(name: @default_name, phone_code: 25, flag_icon: 12)
     country.valid?
-    expect(country.errors[:flag_icon]).to include('Only letters allowed')
+    expect(country.errors[:flag_icon]).to include('should be a valid URL')
   end
 end
