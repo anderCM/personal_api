@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_230_711_061_847) do
+ActiveRecord::Schema[7.0].define(version: 20_230_711_062_709) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -22,12 +22,15 @@ ActiveRecord::Schema[7.0].define(version: 20_230_711_061_847) do
     t.string 'flag_icon', null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.index ['name'], name: 'index_countries_on_name', unique: true
+    t.index ['phone_code'], name: 'index_countries_on_phone_code', unique: true
   end
 
   create_table 'genders', force: :cascade do |t|
     t.string 'name', limit: 20, null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.index ['name'], name: 'index_genders_on_name', unique: true
   end
 
   create_table 'users', force: :cascade do |t|
@@ -36,10 +39,19 @@ ActiveRecord::Schema[7.0].define(version: 20_230_711_061_847) do
     t.string 'password_digest', null: false
     t.string 'first_name', null: false
     t.string 'last_name', null: false
-    t.integer 'phone'
+    t.integer 'phone', null: false
     t.date 'birth_day'
     t.text 'bio'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.bigint 'gender_id', null: false
+    t.bigint 'country_id', null: false
+    t.index ['country_id'], name: 'index_users_on_country_id'
+    t.index ['email'], name: 'index_users_on_email', unique: true
+    t.index ['gender_id'], name: 'index_users_on_gender_id'
+    t.index ['internal_cod'], name: 'index_users_on_internal_cod', unique: true
   end
+
+  add_foreign_key 'users', 'countries'
+  add_foreign_key 'users', 'genders'
 end
