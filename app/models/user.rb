@@ -3,7 +3,7 @@
 class User < ApplicationRecord
   has_secure_password
 
-  validates :internal_code, presence: true, uniqueness: true
+  validates :internal_code, presence: true, uniqueness: true, length: { maximum: 11 }
 
   validates :email, presence: true, uniqueness: true,
                     format: { with: URI::MailTo::EMAIL_REGEXP, message: 'Invalid email format' }

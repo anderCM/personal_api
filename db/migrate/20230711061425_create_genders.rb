@@ -7,5 +7,6 @@ class CreateGenders < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
+    add_index :genders, :name, unique: true
   end
 end
